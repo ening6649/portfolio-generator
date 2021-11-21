@@ -3,9 +3,9 @@
 // var commandLineArgs = process.argv;
 // console.log(commandLineArgs);
 // slice into two parts at the point of process.arg.length
-const profileDataArgs = process.argv.slice(2, process.argv.length);
-const name = profileDataArgs[0];
-const github = profileDataArgs[1];
+// const profileDataArgs = process.argv.slice(2, process.argv.length);
+// const name = profileDataArgs[0];
+// const github = profileDataArgs[1];
 
 
 // console.log(profileDataArgs);
@@ -41,50 +41,39 @@ const github = profileDataArgs[1];
 // console.log(name, github);
 
 // load file system fs.close() fs.open() fs.readFile() fs.writeFile()
-const fs = require('fs');
+// const fs = require('fs');
 // const http = require('http')
 // const url=require('url')
 
-const generatePage = (name, github) => {
-    return `
-    <!DOCTYPE html> 
-    <html lang="en"> 
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>Portfolio Demo</title>
-    </head>
-  
-    <body>
-      <h1>${name}</h1>
-      <h2><a href="https://github.com/${github}">Github</a></h2>
-    </body>
-    </html>
-    `;
-};
+const fs = require('fs');
+const generatePage = require('./src/page-template.js')
 
-fs.writeFile('index.html', generatePage(name, github), err => {
-    if (err) throw err;
-  
-    console.log('Portfolio complete! Check out index.html to see the output!');
-  });
-// console.log(generatePage('Jane', 'janehub'));
+const profileDataArgs = process.argv.slice(2);
 
-const textMessage = fs.readFile('./mesasge.txt','utf8',(err,data)=>{
-    if (err) {
-        console.log(err);
-    }
-    console.log(data);
+const [name, github] = profileDataArgs;
+
+
+
+fs.writeFile('./index.html', generatePage(name, github), err => {
+  if (err) throw new Error(err);
+
+  console.log('Portfolio complete! Check out index.html to see the output!');
 });
+
+// const textMessage = fs.readFile('./mesasge.txt','utf8',(err,data)=>{
+//     if (err) {
+//         console.log(err);
+//     }
+//     console.log(data);
+// });
 // running node index.js should now read text in ./message.txt
 
-const add = (a,b) =>a + b;
-const multiply = (a,b) =>a*b;
+// const add = (a,b) =>a + b;
+// const multiply = (a,b) =>a*b;
 
-module.exports={
-    add:add,
-    multiply:multiply,
-}
+// module.exports={
+//     add:add,
+//     multiply:multiply,
+// }
 // use const math = require("./math");  to load a js file with the above. use the below console log in main js to load math
-console.log(math.add(2,3));
+// console.log(math.add(2,3));
